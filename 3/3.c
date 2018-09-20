@@ -3,19 +3,19 @@
 #include <math.h>
 
 int main(int argc, char *argv[]) {
-  int A[100];
-  int B[100];
-  int C[100];
+	int A[100];
+	int B[100];
+ 	int C[100];
 	int i, rank, size;
   
 	srand(1234);
-  for (i = 0; i < 100; i++) {
-    A[i] = rand() % 1000;
-    B[i] = rand() % 1000;
-  }
+ 	for (i = 0; i < 100; i++) {
+		A[i] = rand() % 1000;
+		B[i] = rand() % 1000;
+	}
 
-  MPI_Init(&argc, &argv);
-  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+	MPI_Init(&argc, &argv);
+	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 	MPI_Comm_size(MPI_COMM_WORLD, &size);
   
 	// Scatter
@@ -39,8 +39,8 @@ int main(int argc, char *argv[]) {
 		C[i] = receiveA[i] + receiveB[i]; 
 	}
 
-  // Gather to C[100] = A[100] + B[100];
-  int receiveC[100];
+	// Gather to C[100] = A[100] + B[100];
+	int receiveC[100];
 	MPI_Gather(C, chunkSize, MPI_INT, receiveC, chunkSize, MPI_INT, 0, MPI_COMM_WORLD);   
 
 	if (rank == 0) {
@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
 		}
 	}	
 
-  MPI_Finalize();
+	MPI_Finalize();
 }
 
 

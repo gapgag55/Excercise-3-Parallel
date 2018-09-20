@@ -4,15 +4,15 @@
 #include <math.h>
 
 int main(int argc, char *argv[]) {
-  int A[100];
+	int A[100];
 	int i, rank, size;
-  srand(1234);
+	srand(1234);
 
-  for (i = 0; i < 100; i++)
-    A[i] = rand() % 1000;
+	for (i = 0; i < 100; i++)
+		A[i] = rand() % 1000;
 
-  MPI_Init(&argc, &argv);
-  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+	MPI_Init(&argc, &argv);
+	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 	MPI_Comm_size(MPI_COMM_WORLD, &size);
 	
 	// Scatter
@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
 	);
 
 	// Receive the conditional integer
-  int receive;
+	int receive;
 
 	if (rank == 0) {
 		printf("Enter the integer: ");
@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
 	MPI_Reduce(&sum, &count, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
 
 	if (rank == 0) 
-		printf("Rank: %d\tCount: %d\n", rank, count);
+		printf("Rank: %d\tValue less than %d has: %d\n", rank, receive, count);
 	
 
   MPI_Finalize();

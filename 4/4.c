@@ -4,20 +4,20 @@
 #include <math.h>
 
 int main(int argc, char *argv[]) {
-  int length = 8;
+	int length = 8;
 	int A[length][length];
-  int i, j, rank, size;
+	int i, j, rank, size;
 
 	srand(1234);
  
-  MPI_Init(&argc, &argv);
+	MPI_Init(&argc, &argv);
 	MPI_Comm_size(MPI_COMM_WORLD, &size);
-  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 	
 	if (rank == 0) {
  		for (i = 0; i < length; i++) {
     	for (j = 0; j < length; j++) {
-      	A[i][j] = 1;
+      	A[i][j] = rand() % 1000;
 	  	}
   	}
 	}
@@ -63,5 +63,5 @@ int main(int argc, char *argv[]) {
  	if (rank == 0)
 		printf("Summation is: %d\n", sum);
 
-  MPI_Finalize();
+	MPI_Finalize();
 }

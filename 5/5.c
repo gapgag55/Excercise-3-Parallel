@@ -4,35 +4,38 @@
 #include <math.h>
 
 int main(int argc, char *argv[]) {
-  int length = 8;
+	int length = 8;
 	int A[length][length];
-  int i, j, rank, size;
+	int i, j, rank, size;
 
 	srand(1234);
  
-  MPI_Init(&argc, &argv);
+	MPI_Init(&argc, &argv);
 	MPI_Comm_size(MPI_COMM_WORLD, &size);
-  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 	
 	if (rank == 0) {
  		for (i = 0; i < length; i++) {
-    	for (j = 0; j < length; j++) {
-      	A[i][j] = 1;
-	  	}
-  	}
+			for (j = 0; j < length; j++) {
+				A[i][j] = rand() % 1000;
+			}
+		}
 	}
 
 	// Let do sunmmation
 	int chunkSize = length * 2;
 	int chunkSize2 = chunkSize / size;
 	int chunkSize3 = chunkSize2 / size;
+	
 	// Receiver receives the row of A[i]
 	int receive[chunkSize];
 	int receive2[chunkSize2];
 	int receive3[chunkSize3];
+
 	// Adder sums the value as vertical
 	int sumVertical[chunkSize];	
 	int sumVertical2[chunkSize2];
+
 	// Adder sums the value as horizontal
 	int number;
 
@@ -72,5 +75,5 @@ int main(int argc, char *argv[]) {
  	if (rank == 0)
 		printf("Summation is: %d\n", sum);
 
-  MPI_Finalize();
+	MPI_Finalize();
 }
